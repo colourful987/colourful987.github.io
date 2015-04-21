@@ -23,7 +23,7 @@ var _hmt = _hmt || [];
   <script src="//dn-lbstatics.qbox.me/respond/1.4.2/respond.min.js"></script>
 
   
-  <title>视图篇——前言 | Colorful Code 博客</title>
+  <title>go基础入门 | Colorful Code 博客</title>
   <meta name="author" content="OST">
   
   <meta name="description" content="Swift  you choose">
@@ -31,7 +31,7 @@ var _hmt = _hmt || [];
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="视图篇——前言"/>
+  
   <meta property="og:site_name" content="Colorful Code 博客"/>
 
   
@@ -220,140 +220,25 @@ var _hmt = _hmt || [];
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
-  
-    <div class="gallery">
-  <div class="photoset">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">go基础入门</h2>
+
+
+  <div class="archive">
     
-      <img src="">
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2015-04-21T15:01:50.000Z"><a href="/2015/04/21/go基础入门/go语言并发程序上篇/">2015-04-21</a></time>
+            
+              <h1 class="title"><a href="/2015/04/21/go基础入门/go语言并发程序上篇/">go语言并发程序上篇</a></h1>
+            
+          </header>
+        </div>
+      </article>
     
   </div>
-  <div class="control">
-    <div class="prev"></div>
-    <div class="next"></div>
-  </div>
-</div>
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-04-21T03:49:15.000Z"><a href="/2015/04/21/optional Swift Series/1st.视图篇/视图篇——前言/">2015-04-21</a></time>
-      
-      
-  
-    <h1 class="title">视图篇——前言</h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <blockquote>
-<p>一直想写一部关于 <em>ios</em> 视图、控制器、框架的系列文章。直到我阅读了<em>Programming iOS 8</em> 这本书之后才下了这个决定。作为笔记也好，作为翻译也罢，坚持才是最难为可贵。<em>CSDN博客</em> 目前访问量突破<strong>11000</strong>大关，我很惊讶，对于一个初出茅庐的<em>swift green</em>，这无疑是一种肯定，在高兴之余，我也在反思，前几天翻阅旧文章，无论从文笔还是条理，感觉自己都是一塌糊涂，或许这也是成长中必经之路吧。对于这个系列的文章我打算还是“专一地”在个站以及团队博客更新。希望大家支持</p>
-</blockquote>
-<p>团队博客：<a href="http://optionalswift.cn" target="_blank" rel="external">Optional Swift</a><br>个人博客：<a href="http://colourfulcode.cn" target="_blank" rel="external">Colourful Code</a> </p>
-<hr>
-<h3 id="正文：">正文：</h3><p>视图(<em>view</em>)是一块大蛋糕，在品尝美味之前，何不先来欣赏一番。<br><a id="more"></a></p>
-<ul>
-<li><p><em>view</em>作为对象，从属类 <em>UIView</em> 或者 <em>UIView</em> 的子类。</p>
-</li>
-<li><p><em>view</em>很聪明，知道如何将自身绘制到屏幕中的一个矩形区域。</p>
-</li>
-<li><p><em>view</em>创建方式有：拖拉控件、纯代码和两者结合。</p>
-</li>
-<li><p><em>view</em>创建配置完毕，那么就忽略它吧。分享一句话<em>“set it and forget it”</em>。打个比方：作为初学者，往往都先接触 <em>StoryBoard</em>，拖拉控件来实现第一个 <em>hello world app</em>。拖拉一个 <em>label</em> 放入 <em>view</em> 中合适的位置；修改标签文字为 <em>“hello world!”</em> ；当程序运行时，标签出现在你设定的位置，一切看起来非常不错，你创建了它：拖拉控件到<em>Storyboard</em>中；你配置了它：修改标签名字；最后忘记了它，但是当程序运行时，它工作得很好！</p>
-</li>
-<li><p><em>view</em>在运行过程中，你可以实时的改变它。</p>
-</li>
-<li><p><em>view</em>是一个响应者(<em>responder</em>)，因为 <em>UIView</em> 是 <em>UIResponder</em> 的子类。这意味着，<em>view</em> 能够对用户的操作做出回应，比如点击、滑动、长按等等。如此，<em>view</em> 作为界面不仅能呈现画面，同时也允许用户触碰来交互。</p>
-</li>
-</ul>
-<p>讲完<em>view</em>的特性，提及一下<strong>视图层级</strong>(<em>view hierarchy</em>)这一概念，它是视图组织中一个重要模式，至关重要！简要给出几个观点：</p>
-<ul>
-<li><p>一个<em>view</em> 可以有多个子视图(<em>subview</em>)</p>
-</li>
-<li><p>一个<em>subview</em> 有且只有一个父视图(<em>superview</em>)</p>
-</li>
-<li><p>如上所述，那么就存在一个关于视图的树结构(<em>tree of views</em>)。</p>
-</li>
-<li><p>如果某个 <em>view</em> 从视图树中移除，那么它的所有子视图也同时被移除掉。</p>
-</li>
-<li><p>如果某个 <em>view</em> 设置了隐藏，那么它的所有子视图也同时隐藏。</p>
-</li>
-<li><p>如果某个 <em>view</em> 移动了位置，那么它的所有子视图也随着父视图而移动。其他行为类似！</p>
-</li>
-</ul>
-<p>总结：我们可以选择 <em>storyboard</em> 来创建视图，也可以通过代码方式来创建。这完全取决于你的需求和你整个应用程序的架构！</p>
-
-      
-    </div>
-    <footer>
-      
-        
-  
-  <div class="categories">
-    <a href="/categories/Swift-Beginner-Series/">Swift Beginner Series</a>
-  </div>
-
-        
-  
-  <div class="tags">
-    <a href="/tags/ios视图/">ios视图</a>
-  </div>
-
-<!-- Baidu Button BEGIN -->
-<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
-<a class="bds_qzone"></a>
-<a class="bds_tsina"></a>
-<a class="bds_tqq"></a>
-<a class="bds_renren"></a>
-<a class="bds_t163"></a>
-<span class="bds_more"></span>
-<a class="shareCount"></a>
-</div>
-<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=3326447" ></script>
-<script type="text/javascript" id="bdshell_js"></script>
-<script type="text/javascript">
-document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
-</script>
-<!-- Baidu Button END -->      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
- <nav id="pagination" >
-    
-    
-    <a href="/2015/04/01/Optional<T>可选类型浅谈/" class="alignright next" >下一页</a>
-    
-    <div class="clearfix"></div>
-</nav>
-
-
-
-<section id="comment">
-
-<!-- Duoshuo Comment BEGIN -->
-	<div class="ds-thread"></div>
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"optionalswift"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = 'http://static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- Duoshuo Comment END -->  
-
-  
-</section>
-
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -367,6 +252,8 @@ var duoshuoQuery = {short_name:"optionalswift"};
 <div class="widget tag">
   <h3 class="title">分类</h3>
   <ul class="entry">
+  
+    <li><a href="/categories/Go语言学习笔记/">Go语言学习笔记</a><small>1</small></li>
   
     <li><a href="/categories/Swift-Beginner-Series/">Swift Beginner Series</a><small>1</small></li>
   

@@ -23,7 +23,7 @@ var _hmt = _hmt || [];
   <script src="//dn-lbstatics.qbox.me/respond/1.4.2/respond.min.js"></script>
 
   
-  <title>Colorful Code 博客</title>
+  <title>go语言并发程序上篇 | Colorful Code 博客</title>
   <meta name="author" content="OST">
   
   <meta name="description" content="Swift  you choose">
@@ -31,7 +31,7 @@ var _hmt = _hmt || [];
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="go语言并发程序上篇"/>
   <meta property="og:site_name" content="Colorful Code 博客"/>
 
   
@@ -220,36 +220,78 @@ var _hmt = _hmt || [];
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article class="page">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
   
   <div class="post-content">
     <header>
       
+        <div class="icon"></div>
+        <time datetime="2015-04-21T15:01:50.000Z"><a href="/2015/04/21/go基础入门/go语言并发程序上篇/">2015-04-21</a></time>
+      
       
   
-    <h1 class="title"></h1>
+    <h1 class="title">go语言并发程序上篇</h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="optional_swift_team">optional swift team</h2><font size="3"><br><br>成立于2015.04月一个下雨天…..<br><br></font>
-
-
-
-<h2 id="成员介绍">成员介绍</h2><font size="3"><br><br>PMST: 目前研究生在读，从事嵌入式系统开发，课余时间热衷ios开发。<br><br>暮夜星晨: 目前大三学生一枚，从事ios开发，俗称小鲜肉。<br><br>JIM:目前大三学生一枚，从事ios开发，正在阿里巴巴实习。<br><br>iceAna:目前从事ios开发以及产品设计，艺术出身。<br><br></font>
-
-
-
-
-<h2 id="博客方向">博客方向</h2><ol>
-<li><p>swift技术文章</p>
+        <blockquote>
+<p>傍晚抽空学习了下go语言的并发编程，从<em>goroutine</em>到<em>channel</em>机制，从开始的稀里糊涂到现在拨开云雾见太阳的感觉，学习的过程总是令人亢奋的！当然目前的理解还是不够透彻的。下篇将举例来分析下。</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="goroutine">goroutine</h3><p>类似开辟进程、线程做法，go语言所采用的为 <em>goroutine</em> 。用法极其简单，也就是使用<em>go</em>关键字，使用方法有两种：</p>
+<ul>
+<li><p>定义一个函数<em>functionName</em>，要异步调用时使用语句<code>go functionName</code>即可。</p>
 </li>
-<li><p>ios技术文章</p>
+<li><p>使用匿名函数，用法为<code>go func(参数列表){函数执行体}()</code>，说明最后一个<code>()</code>作用就是让该函数执行。</p>
 </li>
-<li><p>框架编写</p>
+</ul>
+<p>下面简单代码加深下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/////////第一种示例代码：///////////</span></span><br><span class="line"><span class="keyword">func</span> sayHello(name <span class="typename">string</span>)&#123;</span><br><span class="line">	fmt.Println(<span class="string">"hello"</span>+name)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主程序入口</span></span><br><span class="line"><span class="keyword">func</span> main()&#123;</span><br><span class="line">	<span class="keyword">go</span> sayHello(<span class="string">"PMST"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/////////第二种示例代码：//////////</span></span><br><span class="line"><span class="comment">//主程序入口</span></span><br><span class="line"><span class="keyword">func</span> main()&#123;</span><br><span class="line">	<span class="keyword">go</span> <span class="keyword">func</span>()&#123;</span><br><span class="line">		fmt.Println(<span class="string">"hello world"</span>)</span><br><span class="line">	&#125;()		<span class="comment">//别忘记这里的()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在来讲下<em>go</em>关键字作用，一旦将<em>go</em>放在函数之前，意味分配一个子<em>routine</em>让这个函数自个玩去(有点自身自灭的感觉),而主<em>routine</em>则继续该干嘛干嘛。打个比方,手头有一堆数据，需要经过超级复杂，超级耗时的计算才能得出答案。显然我们的主<em>routine</em>不可能只干这一件事，它还有其他事情需要处理。因此，我们开辟一个<em>routine</em>让其自个算去。</p>
+<p>那么问题来了，这么做确实解决了主<em>routine</em>不被锁死的问题，又能够完成了耗时计算，可是计算出答案之后，如何回传给主<em>routine</em>使用呢？</p>
+<p>这也就是下面<em>channel</em>的使用了</p>
+<h3 id="channel">channel</h3><p><em>goroutine</em> 之间如何进行数据的通信？如下两种：</p>
+<ol>
+<li><p>共用内存内存空间。</p>
 </li>
-<li><p>swift 应用开发</p>
+<li><p>Go语言推荐的通信机制<em>channel</em>。</p>
+</li>
+</ol>
+<p>接下来是我对<em>channel</em>的一些理解：</p>
+<ul>
+<li><p><em>Goroutine</em>使用<em>channel</em> 接收或者发送值，而这些值只能是特定的类型，由自己指定，比如两个<em>routine</em>之间相互传值为<em>int</em>类型，那么<em>channel</em>类型就是<code>chan int</code></p>
+</li>
+<li><p>通过<em>make</em>来创建<em>channel</em>,例如无缓存<code>ci := make(chan int)</code>,指定缓存<code>cib := make(chan int,2)</code>。很明显可以看出，区别在于后面的表述，后者表示给这个通道分类了2个缓存空间，至于区别，下文马上给出。</p>
+</li>
+<li><p><em>channel</em> 通过<code>&lt;-</code> 来接收和发送数据。例如 <code>channel &lt;- value</code> ，显然就是把值 <em>value</em> 发送到通道 <em>channel</em> 中； <code>value := &lt;- ch</code> ，注意箭头，表示从通道 <em>channel</em> 读取数据给 <em>value</em> ,或者可以说从通道<em>channel</em>接收数据赋值给<em>value</em>。顺便提及其他的写法<code>&lt;- channel</code>，显然也是从通道读取数据，但是没有赋值给任何一个变量，因此表示丢弃！</p>
+</li>
+</ul>
+<blockquote>
+<p>关于<em>channel</em>的阻塞问题，我想有必要着重梳理下。请看下面的总结</p>
+</blockquote>
+<p>首先通道的接收和发送都是阻塞的，除非与之对应的一端已经准备好。通过举例来说明是最好不过了。</p>
+<ol>
+<li><p>新建一个通道,<code>channel_c := make(chan int)</code>,注意是没有分配缓存的。</p>
+</li>
+<li><p>随后往通道写入数据,<code>channel_c &lt;- value</code>，由于没有分配缓存，因此这里会被堵塞掉，换句话说就是卡死在这里，只能等待，等待程序某个地方从该通道读取数据！(ps:就好比非常短的管子，就往里塞了一个数据，就要漏出来，因此我一直手”扶着”数据，腾不出手干下面的事了。只有当接收方来拿数据了才能腾出手来干别的事。)</p>
+</li>
+<li><p>现在换成从通道读取数据，<code>v := &lt;- channel_c</code>，分两种情况：当<em>channel_c</em>通道中有数据时，那肯定不会堵塞，很顺利的读过来；当<em>channel_c</em>通道没有数据时，那么自然又堵死了，除非程序其它地方往通道写入数据了！ </p>
+</li>
+<li><p>最后讲讲关于分配了缓存的通道，例如：<code>channel := make(chan int,2)</code>。假如这时候往通道写入数据<code>channel &lt;- 2</code>,由于分配了缓存，意味着是我可以直接写入，不会堵塞了，但这仅当我的缓存区未满的情况下才不会堵塞。下面往通道写入一个<code>channel &lt;- 3</code>，这是没有问题的。不过缓存已经填满了！假如这时候你再写的话就会堵塞，只有程序某个地方从改通道读取数据腾出地方了，你才可以写入！</p>
 </li>
 </ol>
 
@@ -258,7 +300,17 @@ var _hmt = _hmt || [];
     <footer>
       
         
+  
+  <div class="categories">
+    <a href="/categories/Go语言学习笔记/">Go语言学习笔记</a>
+  </div>
+
         
+  
+  <div class="tags">
+    <a href="/tags/go基础入门/">go基础入门</a>, <a href="/tags/go并发编程/">go并发编程</a>
+  </div>
+
 <!-- Baidu Button BEGIN -->
 <div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
 <a class="bds_qzone"></a>
@@ -284,6 +336,8 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
 
  <nav id="pagination" >
     
+    
+    <a href="/2015/04/21/optional Swift Series/Chapter 1. Views/Views 前言/" class="alignright next" >下一页</a>
     
     <div class="clearfix"></div>
 </nav>
