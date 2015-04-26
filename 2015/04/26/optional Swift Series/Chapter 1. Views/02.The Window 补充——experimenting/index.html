@@ -23,7 +23,7 @@ var _hmt = _hmt || [];
   <script src="//dn-lbstatics.qbox.me/respond/1.4.2/respond.min.js"></script>
 
   
-  <title>go语言并发程序上篇 | Colorful Code 博客</title>
+  <title>The Window(补充，Experimenting With Views) | Colorful Code 博客</title>
   <meta name="author" content="OST">
   
   <meta name="description" content="Swift  you choose">
@@ -31,7 +31,7 @@ var _hmt = _hmt || [];
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="go语言并发程序上篇"/>
+  <meta property="og:title" content="The Window(补充，Experimenting With Views)"/>
   <meta property="og:site_name" content="Colorful Code 博客"/>
 
   
@@ -238,64 +238,26 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-04-21T15:01:50.000Z"><a href="/2015/04/21/go基础入门/go语言并发程序上篇/">2015-04-21</a></time>
+        <time datetime="2015-04-26T11:49:15.000Z"><a href="/2015/04/26/optional Swift Series/Chapter 1. Views/02.The Window 补充——experimenting/">2015-04-26</a></time>
       
       
   
-    <h1 class="title">go语言并发程序上篇</h1>
+    <h1 class="title">The Window(补充，Experimenting With Views)</h1>
   
 
     </header>
     <div class="entry">
       
         <blockquote>
-<p>傍晚抽空学习了下go语言的并发编程，从<em>goroutine</em>到<em>channel</em>机制，从开始的稀里糊涂到现在拨开云雾见太阳的感觉，学习的过程总是令人亢奋的！当然目前的理解还是不够透彻的。下篇将举例来分析下。</p>
+<p>作者：PMST<br>文章：Views - Experimenting with Views<br>系列：The Swift Beginner<br>写于：2015.04.26   </p>
 </blockquote>
-<a id="more"></a>
-<h3 id="goroutine">goroutine</h3><p>类似开辟进程、线程做法，go语言所采用的为 <em>goroutine</em> 。用法极其简单，也就是使用<em>go</em>关键字，使用方法有两种：</p>
-<ul>
-<li><p>定义一个函数<em>functionName</em>，要异步调用时使用语句<code>go functionName</code>即可。</p>
-</li>
-<li><p>使用匿名函数，用法为<code>go func(参数列表){函数执行体}()</code>，说明最后一个<code>()</code>作用就是让该函数执行。</p>
-</li>
-</ul>
-<p>下面简单代码加深下：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/////////第一种示例代码：///////////</span></span><br><span class="line"><span class="keyword">func</span> sayHello(name <span class="typename">string</span>)&#123;</span><br><span class="line">	fmt.Println(<span class="string">"hello"</span>+name)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主程序入口</span></span><br><span class="line"><span class="keyword">func</span> main()&#123;</span><br><span class="line">	<span class="keyword">go</span> sayHello(<span class="string">"PMST"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/////////第二种示例代码：//////////</span></span><br><span class="line"><span class="comment">//主程序入口</span></span><br><span class="line"><span class="keyword">func</span> main()&#123;</span><br><span class="line">	<span class="keyword">go</span> <span class="keyword">func</span>()&#123;</span><br><span class="line">		fmt.Println(<span class="string">"hello world"</span>)</span><br><span class="line">	&#125;()		<span class="comment">//别忘记这里的()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>现在来讲下<em>go</em>关键字作用，一旦将<em>go</em>放在函数之前，意味分配一个子<em>routine</em>让这个函数自个玩去(有点自身自灭的感觉),而主<em>routine</em>则继续该干嘛干嘛。打个比方,手头有一堆数据，需要经过超级复杂，超级耗时的计算才能得出答案。显然我们的主<em>routine</em>不可能只干这一件事，它还有其他事情需要处理。因此，我们开辟一个<em>routine</em>让其自个算去。</p>
-<p>那么问题来了，这么做确实解决了主<em>routine</em>不被锁死的问题，又能够完成了耗时计算，可是计算出答案之后，如何回传给主<em>routine</em>使用呢？</p>
-<p>这也就是下面<em>channel</em>的使用了</p>
-<h3 id="channel">channel</h3><p><em>goroutine</em> 之间如何进行数据的通信？如下两种：</p>
-<ol>
-<li><p>共用内存内存空间。</p>
-</li>
-<li><p>Go语言推荐的通信机制<em>channel</em>。</p>
-</li>
-</ol>
-<p>接下来是我对<em>channel</em>的一些理解：</p>
-<ul>
-<li><p><em>Goroutine</em>使用<em>channel</em> 接收或者发送值，而这些值只能是特定的类型，由自己指定，比如两个<em>routine</em>之间相互传值为<em>int</em>类型，那么<em>channel</em>类型就是<code>chan int</code></p>
-</li>
-<li><p>通过<em>make</em>来创建<em>channel</em>,例如无缓存<code>ci := make(chan int)</code>,指定缓存<code>cib := make(chan int,2)</code>。很明显可以看出，区别在于后面的表述，后者表示给这个通道分类了2个缓存空间，至于区别，下文马上给出。</p>
-</li>
-<li><p><em>channel</em> 通过<code>&lt;-</code> 来接收和发送数据。例如 <code>channel &lt;- value</code> ，显然就是把值 <em>value</em> 发送到通道 <em>channel</em> 中； <code>value := &lt;- ch</code> ，注意箭头，表示从通道 <em>channel</em> 读取数据给 <em>value</em> ,或者可以说从通道<em>channel</em>接收数据赋值给<em>value</em>。顺便提及其他的写法<code>&lt;- channel</code>，显然也是从通道读取数据，但是没有赋值给任何一个变量，因此表示丢弃！</p>
-</li>
-</ul>
-<blockquote>
-<p>关于<em>channel</em>的阻塞问题，我想有必要着重梳理下。请看下面的总结</p>
-</blockquote>
-<p>首先通道的接收和发送都是阻塞的，除非与之对应的一端已经准备好。通过举例来说明是最好不过了。</p>
-<ol>
-<li><p>新建一个通道,<code>channel_c := make(chan int)</code>,注意是没有分配缓存的。</p>
-</li>
-<li><p>随后往通道写入数据,<code>channel_c &lt;- value</code>，由于没有分配缓存，因此这里会被堵塞掉，换句话说就是卡死在这里，只能等待，等待程序某个地方从该通道读取数据！<del>(ps:就好比非常短的管子，就往里塞了一个数据，就要漏出来，因此我一直手”扶着”数据，腾不出手干下面的事了。只有当接收方来拿数据了才能腾出手来干别的事。)</del></p>
-</li>
-<li><p>2015.04.22 -&gt; 对上面比喻修改。ps：上面比喻的不是很恰当，我想是不是可以这么认为，<em>channel</em>是连通两个<em>routine</em>的通道，当发送者向<em>channel</em>里发送数据，却迟迟等不到接收者，但秉着尽职尽责的思想，始终等待在那个位置,即<code>channel_c &lt;- value</code>这条发送语句处，直到接收者接收了通道数据，才可以进行下一条语句。那么假如有缓存就不同了，就好比一个驿站，拿着数据到通道这发送“邮件”，尽管可能没有接收者，但是我却可以先暂时放到“驿站”(缓存)这里，然后继续干自己的活，等下次再向通道发送数据时发现缓存满了，就只能耐心等待，除非这时有人来取数据，腾出缓存空间了，才可以写入数据。</p>
-</li>
-<li><p>现在换成从通道读取数据，<code>v := &lt;- channel_c</code>，分两种情况：当<em>channel_c</em>通道中有数据时，那肯定不会堵塞，很顺利的读过来；当<em>channel_c</em>通道没有数据时，那么自然又堵死了，除非程序其它地方往通道写入数据了！ </p>
-</li>
-<li><p>最后讲讲关于分配了缓存的通道，例如：<code>channel := make(chan int,2)</code>。假如这时候往通道写入数据<code>channel &lt;- 2</code>,由于分配了缓存，意味着是我可以直接写入，不会堵塞了，但这仅当我的缓存区未满的情况下才不会堵塞。下面往通道写入一个<code>channel &lt;- 3</code>，这是没有问题的。不过缓存已经填满了！假如这时候你再写的话就会堵塞，只有程序某个地方从改通道读取数据腾出地方了，你才可以写入！</p>
-</li>
-</ol>
+<p>回顾前文，详细讨论了如何使用<em>a main storyboard</em>和纯代码两种情况分别创建<em>window</em>。大致把界面启动、<em>window</em>创建、配置到界面呈现流程讲述了一遍。本章作为<em>The Window</em>的补充，代码实战演示如何增添视图控制器以及视图操作。<br><a id="more"></a></p>
+<h3 id="使用storyboard情况">使用storyboard情况</h3><p>首先，打开<em>Xcode</em>,新建一个<em>Single View Application</em>项目，<em>Xcode</em>将自动生成一个<em>Main.storyboard</em>文件包含到项目中；接下来选中点击查看<em>storyboard</em>中的内容，默认是一个场景(<em>scene</em>)，包含一个视图控制器(<em>view controller</em>)以及控制器所包含的<em>main view</em>；当应用启动时，正如前文所讲到的视图控制器会成为应用主窗口<em>main window</em>的<em>rootViewController</em>(假如不了解，请回顾上文)，而视图控制器的<em>view</em>则成为主窗口的<em>root view</em>。</p>
+<p>你可以尝试从<code>Object library</code>(即右下角第三个图标)中拖拽一个视图到<em>main view</em>中作为其<em>subView</em>，当应用运行时，这个拖拽进来的视图会自动实例化；当然你也可以选择使用代码来实例化一个视图，然后将其加入到<em>main view</em>中。通常我们选择在视图控制器中的<code>viewDidLoad</code>方法(这个<em>method</em>会经常使用！)中添加上述代码配置，以及使用<code>self.view</code>来获得视图控制器的<em>main view</em>。就像下面的代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="func"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">	<span class="keyword">let</span> mainView = <span class="keyword">self</span>.view</span><br><span class="line">	<span class="keyword">let</span> v = <span class="type">UIView</span>(frame:<span class="type">CGRectMake</span>(<span class="number">100</span>,<span class="number">100</span>,<span class="number">50</span>,<span class="number">50</span>))</span><br><span class="line">	v.backgroundColor = <span class="type">UIColor</span>.redColor() <span class="comment">//红色的小正方形</span></span><br><span class="line">	mainview.addSubView(v)					<span class="comment">//添加到主视图中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用代码创建">使用代码创建</h3><p>恩…我们需要一个空项目(前文已经讲述如何创建，请点击<a href="http://colourfulcode.cn/2015/04/25/optional%20Swift%20Series/Chapter%201.%20Views/01.the%20window/" target="_blank" rel="external">这里</a>)，没有<em>.xib</em>文件，没有<em>.storyboard</em>文件，完全依靠代码来实现前面<em>demo</em>的效果。对于新手来说，这无疑是比较兴奋的！</p>
+<p>正如<em>The Window</em>一文最后给出的<em>demo</em>,由于没有分配一个视图控制器给<em>window</em>的<em>rootViewController</em>，在应用启动时会产生警告。最简单的解决方法便是在<code>application:didFinishLauchingWithOptions:</code>方法中，创建一个视图控制器并任命它为<em>window</em>的<em>rootViewController</em>。代码如下：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">application</span><span class="params">(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?)</span></span> -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">self</span>.window = <span class="type">UIWindow</span>(frame: <span class="type">UIScreen</span>.mainScreen().bounds)</span><br><span class="line">  <span class="keyword">self</span>.window.rootViewController = <span class="type">UIViewController</span>()   <span class="comment">//就是这里新建了一个视图控制器</span></span><br><span class="line">  <span class="keyword">let</span> mainView = <span class="keyword">self</span>.window!.rootViewController!.view  <span class="comment">//得到主视图</span></span><br><span class="line">  <span class="keyword">let</span> v = <span class="type">UIView</span>(frame:<span class="type">CGRectMake</span>(<span class="number">100</span>,<span class="number">100</span>,<span class="number">50</span>,<span class="number">50</span>))       <span class="comment">//自定义一个视图</span></span><br><span class="line">  v.backgroundColor = <span class="type">UIColor</span>.redColor()                <span class="comment">//设置颜色为红色</span></span><br><span class="line">  mainview.addSubView(v)                          <span class="comment">//把自定义的红色视图添加到主视图中</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">self</span>.window!.backgroundColor = <span class="type">UIColor</span>.whiteColor()</span><br><span class="line">  <span class="keyword">self</span>.window!.makeKeyAndVisible() <span class="comment">//这一步很重要 </span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -304,13 +266,13 @@ var _hmt = _hmt || [];
         
   
   <div class="categories">
-    <a href="/categories/Go语言学习笔记/">Go语言学习笔记</a>
+    <a href="/categories/Swift-Beginner-Series/">Swift Beginner Series</a>
   </div>
 
         
   
   <div class="tags">
-    <a href="/tags/go基础入门/">go基础入门</a>, <a href="/tags/go并发编程/">go并发编程</a>
+    <a href="/tags/ios视图/">ios视图</a>
   </div>
 
 <!-- Baidu Button BEGIN -->
@@ -338,10 +300,8 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
 
  <nav id="pagination" >
     
-    <a href="/2015/04/22/go基础入门/go语言并发编程下/" class="alignleft prev" >上一页</a>
     
-    
-    <a href="/2015/04/21/optional Swift Series/Chapter 1. Views/Views 前言/" class="alignright next" >下一页</a>
+    <a href="/2015/04/25/optional Swift Series/Chapter 1. Views/01.the window/" class="alignright next" >下一页</a>
     
     <div class="clearfix"></div>
 </nav>
