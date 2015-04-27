@@ -23,7 +23,7 @@ var _hmt = _hmt || [];
   <script src="//dn-lbstatics.qbox.me/respond/1.4.2/respond.min.js"></script>
 
   
-  <title>go语言并发程序下篇 | Colorful Code 博客</title>
+  <title>Subview and Superview | Colorful Code 博客</title>
   <meta name="author" content="OST">
   
   <meta name="description" content="Swift  you choose">
@@ -31,7 +31,7 @@ var _hmt = _hmt || [];
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="go语言并发程序下篇"/>
+  <meta property="og:title" content="Subview and Superview"/>
   <meta property="og:site_name" content="Colorful Code 博客"/>
 
   
@@ -238,60 +238,85 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-04-22T11:06:50.000Z"><a href="/2015/04/22/go基础入门/go语言并发编程下/">2015-04-22</a></time>
+        <time datetime="2015-04-27T06:18:15.000Z"><a href="/2015/04/27/optional Swift Series/Chapter 1. Views/03.subview_and_superview/">2015-04-27</a></time>
       
       
   
-    <h1 class="title">go语言并发程序下篇</h1>
+    <h1 class="title">Subview and Superview</h1>
   
 
     </header>
     <div class="entry">
       
         <blockquote>
-<p>上文从基础层面讲解了<em>goroutine</em> 和 <em>channel</em> ，关于如何使用都停留下嘴皮子上，因此下篇选用几个最简单的例子来巩固下。另外推荐下自己的个人博客，你可以先点进行看下内容是否对您有帮助，在选择收藏或者直接x掉。</p>
+<p>作者：PMST<br>文章：Views - Subview and Superview<br>系列：The Swift Beginner<br>写于：2015.04.27</p>
 </blockquote>
-<p>个人博客地址：<a href="http://colourfulcode.cn" target="_blank" rel="external">Colourful Code</a></p>
+<h3 id="正文">正文</h3><p>在很久以前，苹果公司的视图绘制机制和现在是大相径庭。那时任何一个视图拥有自己的“私人领地”——精确来说就是一个矩形。假如某个非该视图的<em>subview</em>想要呈现其中，这是不被允许的！因为当视图重绘(<em>redraw</em>)矩形区域时，会擦除所有不属于自己的内容；相应地，属于该视图的<em>subview</em>内容只允许在指定的矩形区域内绘制，想要“越狱”(将内容绘制到矩形框外)出去，没门！</p>
 <a id="more"></a>
-<h3 id="正文">正文</h3><p>首先，上文说到<em>channel</em> 有两种情况：</p>
+<p>而从<em>OS X 10.5</em>开始，这些条条框框都已经被废除了。目前苹果公司给出的视图绘制机制，完全摒弃了先前的那些限制。而值得庆幸的是<em>iOS</em>绘图就是基于新的架构！在<em>iOS</em>中,任何一个<em>subview</em>都允许从<em>superview</em>“越狱出去”，这意味着，打破了矩形区域的限制，子视图绘画面积不仅仅只是那么一小片区域，而是整个！此外其他视图(不属于<em>superview</em>的<em>views</em>)能够覆盖别的视图，这在以前是不被允许的。</p>
+<p>下面给出一个小<em>demo</em>,下图显示了三个相互重叠的视图。为了更直观地观看，给三个视图的背景上了色。现在问题来了，你无从得知三个视图之间的关系，比如：三个视图是相互独立？谁是谁的子视图？谁和谁是同级的？</p>
+<p><img src="http://7xiol9.com1.z0.glb.clouddn.com/superview_subview1-2-1三视图关系.png" alt="figure1-1"></p>
+<p>事实上，三者的关系是这样的：</p>
 <ul>
-<li><p>未分配缓存</p>
+<li>粉色视图和红色视图是同级关系</li>
+<li>绿色视图是粉色视图的子视图</li>
+</ul>
+<p>在<em>storyboard</em>中，拖拉两个<em>view</em>到<em>main view</em>中，分别设置背景颜色为粉色和红色；然后再次拖拽一个<em>view</em>到粉色视图中，设其背景颜色为绿色；现在打开<em>nib editor</em>查看视图层级设置。</p>
+<p><img src="http://7xiol9.com1.z0.glb.clouddn.com/superview_subview1-2-2视图层级关系.png" alt="figure1-2"></p>
+<blockquote>
+<p>小技巧：当你的应用程序在运行时想要查看视图层级关系，选择 <em>Debug-&gt;View Debugging-&gt; Capture View Hierarchy</em>。</p>
+</blockquote>
+<p>关于视图在视图层级中的摆放位置是非常有讲究了,这也决定了视图的绘制顺序！</p>
+<ul>
+<li><p>相同层级的视图(属于同一个<em>superView</em>)绘制顺序是固定的：自上而下，只有当前者绘制完毕，才进行下一个视图绘制。有时候，后者视图绘制区域和前者视图有重叠，那么前者内容会被后一个视图遮盖。</p>
 </li>
-<li><p>分配一定缓存</p>
+<li><p>先绘制<em>superview</em>，在绘制属于父视图的<em>subview</em>。</p>
 </li>
 </ul>
-<p>例子从这两点入手给出。</p>
-<h4 id="未分配缓存">未分配缓存</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"><span class="comment">//求和函数sum</span></span><br><span class="line"><span class="keyword">func</span> sum(a []<span class="typename">int</span>,c <span class="keyword">chan</span> <span class="typename">int</span>)&#123;</span><br><span class="line">	sum :=<span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> _,v := <span class="keyword">range</span> a&#123;</span><br><span class="line">		sum += v</span><br><span class="line">	&#125;</span><br><span class="line">	c&lt;-sum			<span class="comment">//向通道c 写入数据值 sum</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主程序入口</span></span><br><span class="line"><span class="keyword">func</span> main()&#123;</span><br><span class="line">	a:= []<span class="typename">int</span>&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">2</span>,-<span class="number">2</span>&#125;</span><br><span class="line">	c:= <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="typename">int</span>)</span><br><span class="line">	<span class="keyword">go</span> sum(a[:],c)		<span class="comment">//开辟一个goroutine 用于进行sum函数执行</span></span><br><span class="line">	x:= &lt;-c 			<span class="comment">//读取c通道的值赋值给x</span></span><br><span class="line">	fmt.Println(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>从主程序开始分析，如下分为几个步骤：</p>
+<p>结合本文第一幅图进行绘制顺序讲解，粉色视图和红色视图为同一级，同属于父视图<em>main view</em>;粉色视图在前，红色视图为后，因此首先绘制粉色视图；粉色视图包含绿色子视图，当粉色视图绘制完毕，接下来是绘制绿色视图(注意：<code>同级视图之间，前者所有视图，包括子视图全部绘制完毕，才进行下一个视图</code>)；最后是绘制红色视图，显然它会覆盖粉色以及绿色视图。</p>
+<h3 id="storyboard中设置层级关系"><em>storyboard</em>中设置层级关系</h3><p>选中<em>main.storyboard</em>，左侧会罗列出所有视图场景，各视图层级关系一览无余。现在选中一个粉色视图，<code>Editor-&gt; Arrange -&gt; Send Forward(其他还有 Send to Front,Send to Back,Send Backward)</code>,操作结果会把粉色视图下移到红色视图之下，意味着粉色视图在最前面，红色视图放置到最底下被遮盖。</p>
+<blockquote>
+<p>补充一点视图层级的知识。</p>
+</blockquote>
 <ul>
-<li><p>声明定义了一个数组 <em>a</em></p>
+<li><p>当子视图从父视图中移除，子视图下的所有视图也将被移除；当子视图在父视图中移动位置，其下所有视图也跟着移动。</p>
 </li>
-<li><p>声明定义了一个通道 <em>c</em>,注意是没有给定缓存的。</p>
+<li><p>子视图会继承父视图的透明程度(<em>degree of transparency</em>),这个很有意思。</p>
 </li>
-<li><p>正因为加了<em>go</em>关键字 ，所以为<em>sum</em>函数开辟一个<em>goroutine</em>，同时给函数传入参数：数组<em>a</em>和通道<em>c</em>。这个时候程序除了主<em>routine</em>，也就是<em>main</em>函数。与此同时还有为<em>sum</em>开辟的子<em>routine</em>，这个子<em>routine</em>所要做的就是对传入的数组进行求和，并且将结果值写入通道<em>c</em>中。</p>
+<li><p>子视图绘画区域可以超出父视图限定的矩形区域，但是！父视图有权利选择显示还是隐藏那些超出范围的内容！！即<em>clipping</em>，我们可以通过设置视图的<code>clipsToBounds</code>属性来决定显示还是隐藏。</p>
 </li>
-<li><p>主<em>routine</em>执行完<code>go sum(a[:],c)</code>这条语句之后，马上就可以执行下一条语句了。也就是 <code>x:=&lt;-c</code>。 这里就有点意思了。要根据实际情况分2种情况来说：<em>c</em> 通道有值和无值。</p>
-<ol>
-<li><em>c</em> 通道有值，这意味着子<em>goroutine</em> 中进行的求和运算先完成，通过语句<code>c&lt;-sum</code> 将结果值写入通道时，由于完成的太早，没有接收方从通道读取数据造成了堵塞，子<em>routine</em>中的程序卡死在这里，等待接收者读取数据。直到主<em>routine</em>执行了<code>x:=&lt;-c</code>这条语句，顺利的从通道读取到了数据，于此同时子<em>routine</em>中<code>c&lt;-sum</code> 由于通道数据被读走，这里不再堵塞，子<em>routine</em>中的<em>sum</em>函数执行完毕。</li>
-<li><em>c</em> 通道没有值，意味着子<em>goroutine</em> 中进行的求和运算还未完成(假如这里的求和运算改为大数据处理，我想要花费很多时间。)，数据还未写入到<em>c</em>通道中，因此由于通道内没有数据，主<em>routine</em>中会堵塞在 <code>x:=&lt;-c</code>这条语句上，等待子<em>routine</em>完成数据计算，执行<code>c&lt;-sum</code>语句往通道中写数据。这时候主<em>routine</em>中 顺利读取通道<em>c</em>中的值，赋值给x，打印出来。</li>
-</ol>
+<li><p>父视图可以拥有多个子视图，从内存管理意义上来说，更像是一组数组；采用引用方式关联每一个子视图；视图数组负责一些添加或移除的工作，当有新的子视图加入进来，相应地数组新增一个元素，相反有子视图从父视图移除，数组要删除对应的元素。</p>
+</li>
+<li><p>父视图的尺寸大小改变时，在它其中的子视图将会自动调整大小。</p>
 </li>
 </ul>
-<h4 id="分配缓存">分配缓存</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"><span class="keyword">func</span> main()&#123;</span><br><span class="line">	c:=<span class="built_in">make</span>(<span class="keyword">chan</span> <span class="typename">int</span>,<span class="number">2</span>)</span><br><span class="line">	c &lt;- <span class="number">10</span></span><br><span class="line">	c &lt;- <span class="number">20</span></span><br><span class="line">	fmt.Println(&lt;-c)</span><br><span class="line">	fmt.Println(&lt;-c)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>由于理解了<em>channel</em> 工作机制，那么分配缓存理解起来容易一些。</p>
+<p>继续说说视图(<em>UIView</em>)，前文谈及它一个特性，只有一个父视图(<em>superview</em>)和多个子视图(<em>an array of UIView</em>，注：数组是有序的！)，允许你从中追踪视图层级关系；从方法上来说，<code>isDescendantOfView:</code>方法能够确定一个视图是否是另外一个视图的子视图；当然你也可以选择使用引用方式来获得某个视图，比如通过<em><code>oulet</code></em>；最后，每一个视图都能够设置一个独一无二的标签——<em>tag</em>属性，通过数值大小来决定层级关系，这都取决你！</p>
+<h3 id="代码设置层级关系">代码设置层级关系</h3><p>使用代码手工设置视图层级关系非常简单。最为熟悉的便是<code>addSubview:</code>，为一个视图添加子视图；与之对应的<code>removeFromSuperview:</code>，则是从父视图中移除子视图，记住一旦移除意味着释放(<em>released</em>)，假如你打算好之后还要重用它，那么就别移除掉，继续保持住！</p>
+<p><em>iOS</em>还提供了各种事件(<em>Events</em>)来通知视图动态变化。当然想要使用还是有条件限制的：一.视图必须有子视图；二.使用<code>override</code>来重写方法，具体有：</p>
 <ul>
-<li><p>首先声明定义一个缓存大小为2的特定类型为<em>int</em>的通道<em>c</em></p>
+<li><p><code>didAddSubview:</code>, <code>willRemoveSubview:</code></p>
 </li>
-<li><p>往通道写入值10，想一想，倘若没有分配缓存，那么程序会堵塞在这里，除非其他<em>routine</em>会从该通道读取数据，但这显然不可能，因为这时候是在主<em>routine</em>中，你又没有创建子<em>routine</em>，所以最后只会报错，<strong>“all goroutines are asleep - deadlock!”</strong></p>
+<li><p><code>didMoveToSuperview</code>, <code>willMoveToSuperview:</code></p>
 </li>
-<li><p>这时候你应该已经理解了，正因为分配了缓存，因此能够顺利的写入值10，接下来往通道写入值20，显然由于缓存还有空间，写入没有问题，不会造成堵塞，程序继续执行下去！</p>
-</li>
-<li><p><code>&lt;-c</code>就是从通道中读取数据，会打印10</p>
-</li>
-<li><p>打印20，有种<em>FIFO</em>(注：<em>“first in first out”</em>，先入先出)的感觉，由于我们往通道缓存中写入值10，再写入值20，取出时就应该有顺序的先取出值10，再取出值20。</p>
+<li><p><code>didMoveToWindow</code>, <code>willMoveToWindow:</code></p>
 </li>
 </ul>
-<h4 id="结尾：">结尾：</h4><p>博主是一个刚入坑的go小菜鸟，对go语言理解可能还不是很透彻，倘若哪里理解不对，或者写的有问题，欢迎指正，踩踩更健康嘛，不过希望您能留言告诉我为啥踩的理由吗，好让我改正，这也算一种学习不是吗？最后谢谢！</p>
+<p>一旦<code>addSubview:</code>被调用，视图(<code>将要添加为子视图的view</code>)会被放置到<em>superview</em>的子视图中的最新一个，从层级关系上来说，自上而下，它是最下面一个！因此在绘制时，它作为压轴最后绘图，所有其他视图都是在它之下。</p>
+<p>前面说到一个视图的子视图可以看做一个数组(<code>array of UIView</code>)，它的索引号自然就是从0开始。当然<em>iOS</em>也提供了一系列方法允许你从一个指定的索引号插入视图，至于放在前面还是后面也是可以选择的！另外还提供了方法能够交换两个同级关系的视图。</p>
+<ul>
+<li><p><code>insertSubview:atIndex:</code></p>
+</li>
+<li><p><code>insertSubview:belowSubview:</code>,<code>insterSubview:aboveSubview</code></p>
+</li>
+<li><p><code>exchangeSubviewAtIndex:withSubviewAtIndex:</code></p>
+</li>
+<li><p><code>bringSubviewToFront:</code>,<code>sendSubviewToBack:</code></p>
+</li>
+</ul>
+<p>不过<em>iOS</em>貌似没有提供移除所有子视图的方法，这个倒是有点让人诧异的，因此我们只能自己遍历视图数组，逐个删除。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> myView.subviews <span class="keyword">as</span> <span class="type">UIView</span>&#123;</span><br><span class="line">	v.removeFromSuperview()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>恩…貌似这么写好<em>low</em>。那么换种方式：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(myView.subviews <span class="keyword">as</span> [<span class="type">UIView</span>]).<span class="built_in">map</span>&#123;$<span class="number">0</span>.removeFromSuperview()&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -300,13 +325,13 @@ var _hmt = _hmt || [];
         
   
   <div class="categories">
-    <a href="/categories/Go语言学习笔记/">Go语言学习笔记</a>
+    <a href="/categories/Swift-Beginner-Series/">Swift Beginner Series</a>
   </div>
 
         
   
   <div class="tags">
-    <a href="/tags/go基础入门/">go基础入门</a>, <a href="/tags/go并发编程/">go并发编程</a>
+    <a href="/tags/ios视图/">ios视图</a>
   </div>
 
 <!-- Baidu Button BEGIN -->
@@ -334,10 +359,8 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
 
  <nav id="pagination" >
     
-    <a href="/2015/04/25/optional Swift Series/Chapter 1. Views/01.the window/" class="alignleft prev" >上一页</a>
     
-    
-    <a href="/2015/04/21/go基础入门/go语言并发程序上篇/" class="alignright next" >下一页</a>
+    <a href="/2015/04/26/optional Swift Series/Chapter 1. Views/02.The Window 补充——experimenting/" class="alignright next" >下一页</a>
     
     <div class="clearfix"></div>
 </nav>
