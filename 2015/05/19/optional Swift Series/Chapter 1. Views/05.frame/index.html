@@ -23,7 +23,7 @@ var _hmt = _hmt || [];
   <script src="//dn-lbstatics.qbox.me/respond/1.4.2/respond.min.js"></script>
 
   
-  <title>ios视图 | Colorful Code 博客</title>
+  <title>Frame | Colorful Code 博客</title>
   <meta name="author" content="OST">
   
   <meta name="description" content="Swift  you choose">
@@ -31,7 +31,7 @@ var _hmt = _hmt || [];
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="Frame"/>
   <meta property="og:site_name" content="Colorful Code 博客"/>
 
   
@@ -220,84 +220,121 @@ var _hmt = _hmt || [];
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-<h2 class="archive-title tag">ios视图</h2>
-
-  <div class="archive">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <!-- fancybox 代码 -->
+<div class="gallery">
+  <div class="photoset">
     
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-05-19T02:26:15.000Z"><a href="/2015/05/19/optional Swift Series/Chapter 1. Views/05.frame/">2015-05-19</a></time>
-            
-              <h1 class="title"><a href="/2015/05/19/optional Swift Series/Chapter 1. Views/05.frame/">Frame</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-04-30T13:20:15.000Z"><a href="/2015/04/30/optional Swift Series/Chapter 1. Views/04.visibility_and_opacity/">2015-04-30</a></time>
-            
-              <h1 class="title"><a href="/2015/04/30/optional Swift Series/Chapter 1. Views/04.visibility_and_opacity/">Visibility and Opacity</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-04-27T06:18:15.000Z"><a href="/2015/04/27/optional Swift Series/Chapter 1. Views/03.subview_and_superview/">2015-04-27</a></time>
-            
-              <h1 class="title"><a href="/2015/04/27/optional Swift Series/Chapter 1. Views/03.subview_and_superview/">Subview and Superview</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-04-26T11:49:15.000Z"><a href="/2015/04/26/optional Swift Series/Chapter 1. Views/02.The Window 补充——experimenting/">2015-04-26</a></time>
-            
-              <h1 class="title"><a href="/2015/04/26/optional Swift Series/Chapter 1. Views/02.The Window 补充——experimenting/">The Window(补充，Experimenting With Views)</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-04-25T03:49:15.000Z"><a href="/2015/04/25/optional Swift Series/Chapter 1. Views/01.the window/">2015-04-25</a></time>
-            
-              <h1 class="title"><a href="/2015/04/25/optional Swift Series/Chapter 1. Views/01.the window/">The Window</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-04-21T03:49:15.000Z"><a href="/2015/04/21/optional Swift Series/Chapter 1. Views/Views 前言/">2015-04-21</a></time>
-            
-              <h1 class="title"><a href="/2015/04/21/optional Swift Series/Chapter 1. Views/Views 前言/">Views 前言</a></h1>
-            
-          </header>
-        </div>
-      </article>
+      <img src="">
     
   </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-19T02:26:15.000Z"><a href="/2015/05/19/optional Swift Series/Chapter 1. Views/05.frame/">2015-05-19</a></time>
+      
+      
+  
+    <h1 class="title">Frame</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <blockquote>
+<p>作者：PMST<br>文章：Views - Frame<br>系列：The Swift Beginner<br>写于：2015.05.19</p>
+</blockquote>
+<p>视图的<em>frame</em>属性类型为<em><code>CGRect</code></em>,定义了该视图在<code>父视图坐标系</code>中的呈现信息——矩形区域的放置位置和尺寸大小。<br><a id="more"></a></p>
+<blockquote>
+<p><em><code>CGRect</code></em>属性：<em>Core Graphic Rectangle</em>简写，<em>CG</em>为框架缩写。<em>CGRect</em>类型为一个结构体，定义了放置位置<code>var origin:CGPoint</code>以及尺寸大小<code>var size:CGSize</code>；有意思的是<em>CGPoint</em>和<em>CGSize</em>类型皆为结构体，前者以<code>(x,y)</code>形式表示一个点，后者以<code>(width,height)</code>表示宽高。</p>
+</blockquote>
+<p>接下来统一下<em>iOS</em>开发中坐标系定义，在父视图中，我们默认把左上角点作为原点，<em>x</em>轴正方向为从左向右，<em>y</em>轴正方向自上而下，如下图所示：(<font color="red">注：在<em>spriteKit场景坐标系中，坐标系的原点为左下角，这里提及但不详细讨论。</em></font>)<br><img src="http://7xiol9.com1.z0.glb.clouddn.com/pic05-坐标系.jpg" alt="图1.iOS坐标系"></p>
+<p>通过设置<em>frame</em>属性，能够对视图放置位置以及尺寸大小作为改变，假如视图呈现在屏幕中，一旦对<em>frame</em>属性做出改变，修改结果会立马呈现到界面上；另一方面，假如视图不可见，你同样可以设置视图的<em>frame</em>。</p>
+<p><em>frame</em>属性详细描述了子视图在父视图坐标系中的放置位置以及尺寸大小。往往我们会通过<em>UIView</em>的<code>init(frame:)</code>构造方法来创建一个实例，默认<em>frame</em>属性值为<code>(0.0,0.0,0.0,0.0)</code>，显然这不是我们所想要的(但往往有些朋友喜欢<code>let view = UIView()</code>)，因此还是乖乖自己写入<em>frame</em>属性值吧。</p>
+<blockquote>
+<p>注意事项：新手在学习初期经常会犯点小错，也就是在初始化视图时没有设置<em>frame</em>属性值，意味着默认值<code>(0.0,0.0,0.0,0.0)</code>分配，宽高值为0，自然就看不见。不过对于一些视图来说，都是有默认标准尺寸的，例如<em>UIButton</em>、<em>UILabel</em>等,它们会根据自身内容来调整尺寸大小，仅仅只需要调用<code>sizeToFit</code>方法就可以了！</p>
+</blockquote>
+<p>下面是一个简单的小<em>demo</em>，通过代码来放置3个视图的位置：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> v1 = <span class="type">UIView</span>(frame:<span class="type">CGRectMake</span>(<span class="number">113</span>, <span class="number">111</span>, <span class="number">132</span>, <span class="number">194</span>))</span><br><span class="line">v1.backgroundColor = <span class="type">UIColor</span>(red: <span class="number">1</span>, green: <span class="number">0.4</span>, blue: <span class="number">1</span>, alpha: <span class="number">1</span>)</span><br><span class="line"><span class="keyword">let</span> v2 = <span class="type">UIView</span>(frame:<span class="type">CGRectMake</span>(<span class="number">41</span>, <span class="number">56</span>, <span class="number">132</span>, <span class="number">194</span>))</span><br><span class="line">v2.backgroundColor = <span class="type">UIColor</span>(red: <span class="number">0.5</span>, green: <span class="number">1</span>, blue: <span class="number">0</span>, alpha: <span class="number">1</span>)</span><br><span class="line"><span class="keyword">let</span> v3 = <span class="type">UIView</span>(frame:<span class="type">CGRectMake</span>(<span class="number">43</span>, <span class="number">197</span>, <span class="number">160</span>, <span class="number">230</span>))</span><br><span class="line">v3.backgroundColor = <span class="type">UIColor</span>(red: <span class="number">1</span>, green: <span class="number">0</span>, blue: <span class="number">0</span>, alpha: <span class="number">1</span>)</span><br><span class="line">mainview.addSubview(v1)</span><br><span class="line">v1.addSubview(v2)</span><br><span class="line">mainview.addSubview(v3)”</span><br></pre></td></tr></table></figure>
+<p>通过前面几篇入门基础篇，对上述代码应该很熟悉，理解起来也很容易了吧！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Swift-Beginner-Series/">Swift Beginner Series</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/ios视图/">ios视图</a>
+  </div>
+
+<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=3326447" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+ <nav id="pagination" >
+    
+    
+    <a href="/2015/04/30/optional Swift Series/Chapter 1. Views/04.visibility_and_opacity/" class="alignright next" >下一页</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+
+
+<section id="comment">
+
+<!-- Duoshuo Comment BEGIN -->
+	<div class="ds-thread"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"optionalswift"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END -->  
+
+  
+</section>
+
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
