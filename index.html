@@ -240,6 +240,62 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-06-20T14:10:16.000Z"><a href="/2015/06/20/swift 控件/tableview_and_collectionview_学习总结/">2015-06-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/20/swift 控件/tableview_and_collectionview_学习总结/">tableview and collectionView 学习总结</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="tableView">tableView</h3><ol>
+<li><p><code>tableview.registerClass(UITableViewCell.classForCoder(),forCellReuseIdentifier:&quot;cell&quot;)</code> 其中第一个参数<code>UITableViewCell.classForCoder()</code>返回的是类名,其次这个函数是在注册cell</p>
+</li>
+<li><p><strong>tableView</strong>主要有<strong>dataSource</strong> 和 <strong>delegate</strong> 两个协议。 前者是提供数据，后者是一些处理方法。显然我不会讲<code>numberOfSectionInTableView、tableView:numberOfRowInSection和tableView:cellForRowAtIndexPath</code>。而是了解到了构建自定义<strong>Header</strong> 和 <strong>Footers</strong>(ps：当然也可以通过<strong>dataSource</strong> 中的<code>tableView:titleForHeaderInSection以及tableView:titleForFooterInSection</code>)，采用<code>tableView:ViewForHeaderInSection和tableVIew:ViewForFooterInSection</code>，这两个方法可不是<strong>dataSource</strong>中的，而是<strong>delegate</strong>中的方法，这是让我很不解的地方，也是曾经我和Jim争论过的问题。</p>
+</li>
+<li><p>其他没什么新鲜东西，除了一个滑动删除，这属于<strong>editing的范畴，也就是编辑</strong>，我们左滑时候要显示那些editing选项要用<code>tableView:editingStyleForRowAtIndexPath</code>返回<code>.Delete</code>；接着 使用<code>tableView:commiteEdittingStyle,ForRowAtIndexPath</code> 方法来处理这些编辑请求。</p>
+</li>
+</ol>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/06/20/swift 控件/tableview_and_collectionview_学习总结/#more" class="more-link">阅读全文</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+    <!-- fancybox 代码 -->
+<div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-05-19T02:26:15.000Z"><a href="/2015/05/19/optional Swift Series/Chapter 1. Views/05.frame/">2015-05-19</a></time>
       
       
@@ -714,6 +770,8 @@ var _hmt = _hmt || [];
     <li><a href="/categories/Swift-Beginner-Series/">Swift Beginner Series</a><small>6</small></li>
   
     <li><a href="/categories/swift-language/">swift language</a><small>1</small></li>
+  
+    <li><a href="/categories/swift-控件/">swift 控件</a><small>1</small></li>
   
   </ul>
 </div>

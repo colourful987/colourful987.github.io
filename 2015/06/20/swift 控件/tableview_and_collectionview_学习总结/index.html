@@ -23,7 +23,7 @@ var _hmt = _hmt || [];
   <script src="//dn-lbstatics.qbox.me/respond/1.4.2/respond.min.js"></script>
 
   
-  <title>go基础入门 | Colorful Code 博客</title>
+  <title>tableview and collectionView 学习总结 | Colorful Code 博客</title>
   <meta name="author" content="OST">
   
   <meta name="description" content="Swift  you choose">
@@ -31,7 +31,7 @@ var _hmt = _hmt || [];
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="tableview and collectionView 学习总结"/>
   <meta property="og:site_name" content="Colorful Code 博客"/>
 
   
@@ -220,36 +220,139 @@ var _hmt = _hmt || [];
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-<h2 class="archive-title tag">go基础入门</h2>
-
-  <div class="archive">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <!-- fancybox 代码 -->
+<div class="gallery">
+  <div class="photoset">
     
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-04-22T11:06:50.000Z"><a href="/2015/04/22/go基础入门/go语言并发编程下/">2015-04-22</a></time>
-            
-              <h1 class="title"><a href="/2015/04/22/go基础入门/go语言并发编程下/">go语言并发程序下篇</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-04-21T15:01:50.000Z"><a href="/2015/04/21/go基础入门/go语言并发程序上篇/">2015-04-21</a></time>
-            
-              <h1 class="title"><a href="/2015/04/21/go基础入门/go语言并发程序上篇/">go语言并发程序上篇</a></h1>
-            
-          </header>
-        </div>
-      </article>
+      <img src="">
     
   </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-20T14:10:16.000Z"><a href="/2015/06/20/swift 控件/tableview_and_collectionview_学习总结/">2015-06-20</a></time>
+      
+      
+  
+    <h1 class="title">tableview and collectionView 学习总结</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="tableView">tableView</h3><ol>
+<li><p><code>tableview.registerClass(UITableViewCell.classForCoder(),forCellReuseIdentifier:&quot;cell&quot;)</code> 其中第一个参数<code>UITableViewCell.classForCoder()</code>返回的是类名,其次这个函数是在注册cell</p>
+</li>
+<li><p><strong>tableView</strong>主要有<strong>dataSource</strong> 和 <strong>delegate</strong> 两个协议。 前者是提供数据，后者是一些处理方法。显然我不会讲<code>numberOfSectionInTableView、tableView:numberOfRowInSection和tableView:cellForRowAtIndexPath</code>。而是了解到了构建自定义<strong>Header</strong> 和 <strong>Footers</strong>(ps：当然也可以通过<strong>dataSource</strong> 中的<code>tableView:titleForHeaderInSection以及tableView:titleForFooterInSection</code>)，采用<code>tableView:ViewForHeaderInSection和tableVIew:ViewForFooterInSection</code>，这两个方法可不是<strong>dataSource</strong>中的，而是<strong>delegate</strong>中的方法，这是让我很不解的地方，也是曾经我和Jim争论过的问题。</p>
+</li>
+<li><p>其他没什么新鲜东西，除了一个滑动删除，这属于<strong>editing的范畴，也就是编辑</strong>，我们左滑时候要显示那些editing选项要用<code>tableView:editingStyleForRowAtIndexPath</code>返回<code>.Delete</code>；接着 使用<code>tableView:commiteEdittingStyle,ForRowAtIndexPath</code> 方法来处理这些编辑请求。</p>
+</li>
+</ol>
+<a id="more"></a>
+<h3 id="CollectionView">CollectionView</h3><ol>
+<li><p>基本和<strong>tableView</strong>差不多，也有<strong>cell</strong>,<strong>cell</strong>有个属性叫<strong>contentView</strong>，而我们的内容就是放置在这个视图上面。</p>
+</li>
+<li><p>要有一个<code>initWithCollectionViewLayout</code><strong>designed 构造器方法</strong>，里面会注册<strong>cell</strong>,对<strong>collectionView</strong>的一些配置。一般这么写：</p>
+</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="keyword">init</span>(collectionViewLayout layout: <span class="type">UICollectionViewLayout</span>) &#123;</span><br><span class="line">  <span class="keyword">super</span>.<span class="keyword">init</span>(collectionViewLayout: layout)</span><br><span class="line">  collectionView!.registerClass(<span class="type">UICollectionViewCell</span>.classForCoder(), forCellWithReuseIdentifier: <span class="string">"cell"</span>)</span><br><span class="line">  </span><br><span class="line">  collectionView!.backgroundColor = <span class="type">UIColor</span>.whiteColor()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>紧接着就是需要一个<strong>required init</strong> 用来实例化一个<strong>Layout</strong>，看名字就是布局配置，比如设置下cell之间距离，cell大小等等。代码如下：</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">convenience required <span class="keyword">init</span>(coder aDecoder: <span class="type">NSCoder</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> flowLayout = <span class="type">UICollectionViewFlowLayout</span>()</span><br><span class="line">  </span><br><span class="line">  flowLayout.minimumLineSpacing = <span class="number">20</span></span><br><span class="line">  flowLayout.minimumInteritemSpacing = <span class="number">10</span></span><br><span class="line">  flowLayout.itemSize = <span class="type">CGSize</span>(width: <span class="number">80</span>, height: <span class="number">120</span>)</span><br><span class="line">  flowLayout.scrollDirection = .<span class="type">Vertical</span></span><br><span class="line">  </span><br><span class="line">  flowLayout.sectionInset = <span class="type">UIEdgeInsets</span>(top: <span class="number">10</span>, <span class="keyword">left</span>: <span class="number">20</span>, bottom: <span class="number">10</span>, <span class="keyword">right</span>: <span class="number">20</span>)</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">self</span>.<span class="keyword">init</span>(collectionViewLayout:flowLayout)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>注册<strong>reusable cell</strong>有两种，<strong>Class和nib两种</strong>，方法分别为：<code>register Class:forCellWithReuseIdentifier:</code>和<code>registerNib:forCellWithReuseIdentifier:</code>,至于Nib怎么得到就是<code>UINib:nibName:bundle:</code>方法。</p>
+</li>
+<li><p>填充<strong>collectionView</strong> 基本和 <strong>tableView</strong>差不多。首先要确定有多少Section(<code>numberOfSectionsInCollectionView</code>)；然后要知道每个Section有多少个Cell(<code>collectionView: UICollectionView, numberOfItemsInSection section: Int) -&gt; Int</code>);最后就是每个cell的内容(<code>collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -&gt; UICollectionViewCell</code>).</p>
+</li>
+<li><p>delegate 中方法也是蛮多且有用。</p>
+</li>
+</ol>
+<ul>
+<li><code>collectionView:didHighlightItemAtIndexPath:</code></li>
+<li><code>collectionView:didUnhighlightItemAtIndexPath:</code></li>
+<li><code>collectionView:didSelectItemAtIndexPath:</code></li>
+<li><code>collectionView:didDeselectItemAtIndexPath:</code></li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/swift-控件/">swift 控件</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/swift-控件/">swift_控件</a>, <a href="/tags/swift-视图/">swift_视图</a>
+  </div>
+
+<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=3326447" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+ <nav id="pagination" >
+    
+    
+    <a href="/2015/05/19/optional Swift Series/Chapter 1. Views/05.frame/" class="alignright next" >下一页</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+
+
+<section id="comment">
+
+<!-- Duoshuo Comment BEGIN -->
+	<div class="ds-thread"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"optionalswift"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END -->  
+
+  
+</section>
+
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
