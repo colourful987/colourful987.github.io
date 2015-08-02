@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE HTML>
+<html>
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?94f6ddbfbc53cb18818538cafd3ba350";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+
+
+<head>
+  <meta charset="utf-8">
+  <script src="//dn-lbstatics.qbox.me/jquery/1.11.2/jquery.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.7.2.min.js"></script> 
+  <script src="//dn-lbstatics.qbox.me/pintuer/1.0/pintuer.mini.js"></script>
+  <script src="//dn-lbstatics.qbox.me/respond/1.4.2/respond.min.js"></script>
+
+  
+  <title>Why coding like This ------ Map函数揭秘 | Colorful Code 博客</title>
+  <meta name="author" content="OST">
+  
+  <meta name="description" content="Swift  you choose">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Why coding like This ------ Map函数揭秘"/>
+  <meta property="og:site_name" content="Colorful Code 博客"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  <link rel="alternate" href="/atom.xml" title="Colorful Code 博客" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//libs.baidu.com/jquery/1.8.0/jquery.min.js"></script>
+</head>
+
+
+<body>
+  <header id="header" class="inner">
+<div class="alignleft">
+  <h1><a href="/">Colorful Code 博客</a></h1>
+  <h2><a href="/">Each line of code is colourful</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">主页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/picture">心灵鸡汤</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+	<li> <a href="/atom.xml">RSS</a> </li>
+<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <!-- fancybox 代码 -->
+<div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-02T15:24:16.000Z"><a href="/2015/08/02/why-coding-like-this/map filter reduce/">2015-08-02</a></time>
+      
+      
+  
+    <h1 class="title">Why coding like This ------ Map函数揭秘</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="1-Map函数揭秘">1.Map函数揭秘</h3><h4 id="Topic_1:"><strong>Topic 1:</strong></h4><p>请用Map函数实现对一个Int类型数组的元素进行2倍放大。</p>
+<h4 id="Example:"><strong>Example:</strong></h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例一</span></span><br><span class="line"><span class="keyword">let</span> intArray = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="keyword">var</span> result = intArray.<span class="built_in">map</span>&#123; $<span class="number">0</span> * <span class="number">2</span>&#125;  <span class="comment">//输出[2,4,6]</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="why_coding_like_this?"><strong>why coding like this?</strong></h4><p>假设让你写一个函数，传入参数为Int类型数组，对数组内每一个元素进行放大2倍操作，然后将处理后的数组作为结果返回。<br>这不难实现，只需要使用<code>for-in</code>语句遍历数组元素，进行放大处理并保存结果值，最后返回处理后的数组。代码如下：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例二：</span></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">doubleArrayByTwo</span><span class="params">(xs:[Int])</span></span>-&gt;[<span class="type">Int</span>]&#123;</span><br><span class="line">  <span class="keyword">var</span> result :[<span class="type">Int</span>] = []</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span> x <span class="keyword">in</span> xs&#123;</span><br><span class="line">    result.append(x * <span class="number">2</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不妨来试试写的函数：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = doubleArrayByTwo(intArray)	<span class="comment">//返回[2,4,6]</span></span><br></pre></td></tr></table></figure>
+<p>看来我们确实实现了对一个数组元素进行放大两倍的函数，那么接下来请实现对每一个数组元素进行一个线性变换(y = ax + b),其中 a = 2 b = 3 。</p>
+<p>难度不大，重写一个函数：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例三：线性变换 y = 2x + 3</span></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">linealMeasureArray</span><span class="params">(xs:[Int])</span></span>-&gt;[<span class="type">Int</span>]&#123;</span><br><span class="line">  <span class="keyword">var</span> result :[<span class="type">Int</span>] = []</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span> x <span class="keyword">in</span> xs&#123;</span><br><span class="line">    result.append(x * <span class="number">2</span> + <span class="number">3</span>)  <span class="comment">//仅仅只是括号中的代码改变了下而已</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么接下来 a = 3 b = 4呢,你开始抓狂，Oh,No!显然每一次a,b值的改变就要重写一个函数绝非明智，考虑到所给命题我们均可以通过<code>for-in</code>语句遍历数组每一个元素，进行<code>f(x)</code>变换即可，因此上述代码我们更改为：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例四：</span></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">handleIntArray</span><span class="params">(xs:[Int],f:Int-&gt;Int)</span></span>-&gt;[<span class="type">Int</span>]&#123;</span><br><span class="line">  <span class="keyword">var</span> result :[<span class="type">Int</span>] = []</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span> x <span class="keyword">in</span> xs &#123;</span><br><span class="line">    result.append(f(x))</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>值得注意得是，我们除了传入一个xs数组外，还传入了一个<code>f</code>闭包，而这个闭包类型为<code>(Int-&gt;Int)</code>,接受<code>Int</code>类型数据，经过闭包体内处理后再返回一个<code>Int</code>结果值。更多闭包内容，请点击<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Closures.html#//apple_ref/doc/uid/TP40014097-CH11-ID94" target="_blank" rel="external">这里</a>。</p>
+<p>现在来测试下所写的这个函数是否满足我们要求：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//输出 3 5 7</span></span><br><span class="line">result = handleIntArray(intArray)&#123;</span><br><span class="line">  x <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">2</span> * x + <span class="number">1</span>		<span class="comment">//2 * x + 1 就是闭包的处理体 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可能如此写法仍然让人迷惑，因此我决定再简单分解下。首先声明一个函数名为<code>handleClosure</code>的函数，主要作用是对传入的x元素进行<code>2*x+1</code>的线性变换，最后将处理后的结果值返回。现在来调用<code>handleIntArray</code>函数，首先传入<code>intArray</code>数组，接着将<code>handleClosure</code>函数作为一个参数传入，那么在什么时候调用呢？ 请看<code>result.append(f(x))</code> f(x)此时即为handleClosure(x:)函数，而传入的x参数为遍历数组中的元素。一切问题引刃而解！代码如下。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">handleClosure</span><span class="params">(x:Int)</span></span>-&gt;<span class="type">Int</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">2</span> * x + <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line">result = handleIntArray(intArray, handleClosure)</span><br></pre></td></tr></table></figure>
+<p>新命题：对Int类型数组的每一个元素进行判断，偶数为<code>true</code>，奇数为<code>false</code>，返回数组类型为[Bool].</p>
+<p>分析:奇偶判断我们通过 x % 2 == 0 语句轻松实现，然后调用handleIntArray即可，遗憾的是闭包的返回参数与我们的不匹配，我们所期望的是返回Bool类型，而闭包中为Int，不得已我们需要重新构建一个</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例五：</span></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">handleBoolArray</span><span class="params">(xs:[Int],f:Int-&gt;Bool)</span></span>-&gt;[<span class="type">Bool</span>]&#123;</span><br><span class="line">  <span class="keyword">var</span> result :[<span class="type">Bool</span>] = []</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span> x <span class="keyword">in</span> xs &#123;</span><br><span class="line">    result.append(f(x))</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在我们能够使用<code>func handleIntArray(xs:[Int],f:Int-&gt;Int)-&gt;[Int]</code>来处理Int类型的数组，使用<code>func handleBoolArray(xs:[Int],f:Int-&gt;Bool)-&gt;[Bool]</code>来处理Int类型 返回Bool类型，但这都均有局限性。假如下一次是要处理String类型的数组，亦或是Double类型的数组呢？</p>
+<p>仔细分析两个handle函数，它们看起来非常相似，唯一的区别就是在传入参数上。这时候我们就要试想了，如何声明一个函数能表示不同类型的参数输入呢？ 感谢Swift提供了<code>generics</code>为我们很好的解决了这一难题。现在我们来构建一个函数:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例六：</span></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">genericComputeArray</span><span class="generics">&lt;U&gt;</span><span class="params">(xs:[Int],f:Int-&gt;U)</span></span>-&gt;[<span class="type">U</span>]&#123;</span><br><span class="line">  <span class="keyword">var</span> result :[<span class="type">U</span>] = []</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span> x <span class="keyword">in</span> xs &#123;</span><br><span class="line">    result.append(f(x))</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> result	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>泛型并不难，注意几点,尖括号<code>&lt;&gt;</code>中的<code>U</code>为类型，而非类，其次类型<code>U</code>是未定的，直到你调用该函数，传入参数为<code>Int</code>类型，<code>U</code>便替换成<code>Int</code>；传入参数为<code>String</code>类型，<code>U</code>便替换成<code>String</code>。   </p>
+<blockquote>
+<p>更多时候我建议你把<code>genericComputerArray&lt;U&gt;</code>看作是该函数的大家庭family,一个具体的类型<code>U</code>对应一个新函数！该函数传入一个Int类型数组，以及一个闭包(类型为<code>Int-&gt;U</code>)，返回一个<code>U</code>类型的数组<code>[U]</code>。</p>
+</blockquote>
+<p>为了使得函数更通用，尝试稍微修改以上函数来构建我们的<code>map</code>函数：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例七：</span></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">myMap</span><span class="generics">&lt;T,U&gt;</span><span class="params">(xs:[T],f:T-&gt;U)</span></span>-&gt;[<span class="type">U</span>]&#123;</span><br><span class="line"> <span class="keyword">var</span> result:[<span class="type">U</span>] = []</span><br><span class="line"> <span class="keyword">for</span> x <span class="keyword">in</span> xs&#123;</span><br><span class="line">	result.append(f(x))</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line">myMap(intArray)&#123;</span><br><span class="line">  x <span class="keyword">in</span> x * <span class="number">2</span></span><br><span class="line">&#125;<span class="comment">//输出 [2,4,6]</span></span><br></pre></td></tr></table></figure>
+<p>至于为什么系统的调用是xxx.map{}，其实map函数是作为数组的实例方法存在，遵循了协议实现罢了。好奇的你可以一试。</p>
+<blockquote>
+<p>总结：恭喜你自定义了一个myMap函数，可见系统自带的map函数也并不是那么神秘。 下次带来<code>why coding like this --- filter的实现</code></p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/why-coding-like-this/">why coding like this</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/swift进阶/">swift进阶</a>
+  </div>
+
+<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=3326447" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+ <nav id="pagination" >
+    
+    
+    <a href="/2015/06/20/swift 控件/tableview_and_collectionview_学习总结/" class="alignright next" >下一页</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+
+
+<section id="comment">
+
+<!-- Duoshuo Comment BEGIN -->
+	<div class="ds-thread"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"optionalswift"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END -->  
+
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:optionalswift.cn">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Go语言学习笔记/">Go语言学习笔记</a><small>2</small></li>
+  
+    <li><a href="/categories/Swift-Beginner-Series/">Swift Beginner Series</a><small>6</small></li>
+  
+    <li><a href="/categories/swift-language/">swift language</a><small>1</small></li>
+  
+    <li><a href="/categories/swift-控件/">swift 控件</a><small>1</small></li>
+  
+    <li><a href="/categories/why-coding-like-this/">why coding like this</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  <div class="widget tag">
+<h3 class="title">博客简介</h3>
+<ul class="entry">
+<li>大名:PMST</li>
+<li>团队:Optional Swift Team</li>
+<li>宣言：each line of code is colorful</li>
+<li>Theme: <a href="https://github.com/zippera/lightum">Lightum</a>
+<li>想交友的朋友请<a href="http://optionalswift.cn/about">联系我们</a></li>
+<li>QQ 号：1345614869</li>
+<font color="red">Swift 交流群：392436022</font>
+</ul>
+</div>
+
+
+
+  <div class="widget tag">
+<h3 class="title">广告赞助</h3>
+<ul class="entry">
+<li><a href="http://www.aliexpress.com/store/1764462"> Fashion Wardrobe for women</a></li>	
+</ul>
+</div>
+
+  <div class="widget tag">
+<h3 class="title">友情链接</h3>
+<ul class="entry">
+<li>想玩病毒?：<a href="http://mapers.net/forum.php">路标社区</a></li>
+<li>什么都玩?：<a href="http://colourfulcode.cn">Colourful Code</a></li>
+</ul>
+</div>
+
+
+
+  <div class="widget tag">
+<h3 class="title">安静的听音乐</h3>
+<ul class="entry">
+<li>
+<audio controls="controls" height="100" width="100">
+  <source src="http://7xiol9.com1.z0.glb.clouddn.com/musicComing Home.mp3" type="audio/mp3" />
+  <source src="http://7xiol9.com1.z0.glb.clouddn.com/musicComing Home.mp3" type="audio/ogg" />
+  <embed height="100" width="100" src="http://7xiol9.com1.z0.glb.clouddn.com/musicComing Home.mp3" >
+</audio>
+</li>
+</ul>
+</div>
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><section>
+  Redesign by <a href="_widget" target="_blank">PMST</a>
+   | 
+  Owned by <a href="http://optionalswift.cn" target="_blank">Optional Swift Team</a> 
+   |
+  Team was set up in April
+	 <font id="counter"></font>
+</section>
+<div class="clearfix"></div>
+<script src="//buru.u.qiniudn.com/firebase-2.0.5.js"></script>
+<!--script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script-->
+<script src="/js/counter.js"></script></footer>
+  <script src="//libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>
+
+
+<a href="https://github.com/zippera" target="_blank"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub"></a>
